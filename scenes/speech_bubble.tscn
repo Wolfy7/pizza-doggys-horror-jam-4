@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://n0drp4mecb56"]
+
+[ext_resource type="Texture2D" uid="uid://qxs8u4nxmuuv" path="res://assets/art/sprites/speech-bubble.png" id="1_x4eeu"]
+[ext_resource type="FontFile" uid="uid://cc1kk138p3nw" path="res://assets/fonts/8bitOperatorPlus8-Regular.ttf" id="2_e1pub"]
+
+[node name="SpeechBubble" type="MarginContainer" unique_id=766895677]
+offset_right = 72.0
+offset_bottom = 43.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1829308688]
+layout_mode = 2
+texture = ExtResource("1_x4eeu")
+region_rect = Rect2(0, 0, 64, 38)
+patch_margin_left = 14
+patch_margin_top = 19
+patch_margin_right = 9
+patch_margin_bottom = 24
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1489958312]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 14
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer" unique_id=285982445]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_e1pub")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "Test Test
+1234 "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

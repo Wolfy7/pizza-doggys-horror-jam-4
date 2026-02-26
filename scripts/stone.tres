@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TileInfo" format=3 uid="uid://b4jle7w01vncf"]
+
+[ext_resource type="Script" uid="uid://c2lu1j5kdn3u1" path="res://scripts/tile_info.gd" id="1_psw84"]
+
+[resource]
+script = ExtResource("1_psw84")
+drillable = true
+breakdown_time = 1.5
+metadata/_custom_type_script = "uid://c2lu1j5kdn3u1"

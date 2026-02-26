@@ -5,35 +5,61 @@ var inputs: Dictionary = {"right": Vector2.RIGHT,
 							"left": Vector2.LEFT,
 							"up": Vector2.UP,
 							"down": Vector2.DOWN}
-
+var facing: Vector2 = Vector2.RIGHT
 var animation_speed: int = 3
 var moving: bool = false
+var current_tile: Vector2i 
+var facing_tile: Vector2i
 
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
+@onready var drill_particle: DrillParticle = $DrillParticle
 
+func set_facing(new_value) -> void:
+	facing = new_value
+	current_tile = tile_map_layer.local_to_map(position)
+	facing_tile = tile_map_layer.local_to_map(position + facing * tile_size)
+	
+	# TODO
+	if facing == Vector2.RIGHT:
+		rotation_degrees = 0.0
+	elif facing == Vector2.DOWN:
+		rotation_degrees = 90.0
+	elif facing == Vector2.LEFT:
+		rotation_degrees = 180
+	elif facing == Vector2.UP:
+		rotation_degrees= 270
+		
 
 func _ready() -> void:
-	position = position.snapped(Vector2.ONE * tile_size)
-	position += Vector2.ONE * tile_size/2
-	
+	set_facing(facing)
 
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if moving:
 		return
 	for direction in inputs.keys():
 		if event.is_action_pressed(direction):
+			set_facing(inputs[direction])
 			move(direction)
-			
+	
+	if event.is_action_pressed("drill"):
+		var tile_info: TileInfo = tile_map_layer.get_tile_info(facing_tile)
+		if tile_info && tile_info.drillable: 
+			drill_particle.activate()
+			await get_tree().create_timer(tile_info.breakdown_time).timeout
+			tile_map_layer.delete_tile(facing_tile)
+			drill_particle.deactivate()
 
 func move(direction: String) -> void:
-	print(position)
-	print(tile_map_layer.local_to_map(position))
-	
+	if not tile_map_layer.can_move_to(facing_tile):
+		return
 	#position += inputs[direction] * tile_size
 	var tween = create_tween()
 	tween.tween_property(self, "position", position + inputs[direction] * tile_size, 1.0 / animation_speed). set_trans(Tween.TRANS_SINE)
 	moving = true
 	await tween.finished
 	moving = false
-	var tile = tile_map_layer.local_to_map(position)
-	print(tile_map_layer.get_cell_atlas_coords(tile) )
+	
+	current_tile = tile_map_layer.local_to_map(position)
+	facing_tile = tile_map_layer.local_to_map(position + facing * tile_size)
+	
