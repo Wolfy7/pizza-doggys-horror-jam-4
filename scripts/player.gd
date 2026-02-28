@@ -13,6 +13,7 @@ var facing_tile: Vector2i
 
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 @onready var drill_particle: DrillParticle = $DrillParticle
+@onready var camera_2d: Camera2D = $Camera2D
 
 func set_facing(new_value) -> void:
 	facing = new_value
@@ -42,10 +43,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			set_facing(inputs[direction])
 			move(direction)
 	
-	if event.is_action_pressed("drill"):
+	if event.is_action_pressed("drill"):	
 		var tile_info: TileInfo = tile_map_layer.get_tile_info(facing_tile)
 		if tile_info && tile_info.drillable: 
 			drill_particle.activate()
+			camera_2d.start_shake(2, 1)
 			await get_tree().create_timer(tile_info.breakdown_time).timeout
 			tile_map_layer.delete_tile(facing_tile)
 			drill_particle.deactivate()
