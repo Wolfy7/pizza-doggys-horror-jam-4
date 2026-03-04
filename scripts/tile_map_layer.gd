@@ -16,4 +16,5 @@ func can_move_to(tile: Vector2i) -> bool:
 	return get_cell_atlas_coords(tile) == Vector2i(0,2)
 	
 func delete_tile(tile: Vector2i) -> void:
-	set_cell(tile, 0, Vector2i(0,2), 0)	
+	set_cell(tile, 1, Vector2i(0,2), 0)	
+	update_internals()

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cyer4fauriqxp"
+path="res://.godot/imported/1583916-Oleg_Powerx-raising evil.ogg-05c0e7c5319f688438d76993bc264a7a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/1583916-Oleg_Powerx-raising evil.ogg"
+dest_files=["res://.godot/imported/1583916-Oleg_Powerx-raising evil.ogg-05c0e7c5319f688438d76993bc264a7a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

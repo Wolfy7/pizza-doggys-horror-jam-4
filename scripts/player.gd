@@ -14,11 +14,14 @@ var facing_tile: Vector2i
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 @onready var drill_particle: DrillParticle = $DrillParticle
 @onready var camera_2d: Camera2D = $Camera2D
+@onready var flip_sprite_2d: FlipSprite2D = $FlipSprite2D
 
 func set_facing(new_value) -> void:
 	facing = new_value
 	current_tile = tile_map_layer.local_to_map(position)
 	facing_tile = tile_map_layer.local_to_map(position + facing * tile_size)
+	
+	#flip_sprite_2d.flip_sprite_towards(facing_tile)
 	
 	# TODO
 	if facing == Vector2.RIGHT:
