@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/1688196-Sarah_De_Carlo-Surrender (Dark Cinema
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

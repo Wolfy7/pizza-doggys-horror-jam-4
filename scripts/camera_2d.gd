@@ -10,8 +10,8 @@ func start_shake(duration: float, strength: float) -> void:
 func _process(delta: float) -> void:
 	if shake_time > 0:
 		shake_time -= delta
-		var offset = Vector2(randf_range(-1,1), randf_range(-1,1)) * shake_strength
-		offset *= shake_time
-		position = offset
+		var shake = Vector2(randf_range(-1,1), randf_range(-1,1)) * shake_strength
+		shake *= shake_time
+		position = shake
 	else:
 		position = Vector2.ZERO

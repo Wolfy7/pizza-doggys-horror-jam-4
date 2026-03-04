@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://n0drp4mecb56" path="res://scenes/speech_bubble.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://feqh56bfj4k7" path="res://scenes/drill_particle.tscn" id="6_tefeu"]
 [ext_resource type="Script" uid="uid://dtq8xglje8cf7" path="res://scripts/camera_2d.gd" id="9_85g3d"]
-[ext_resource type="Script" uid="uid://bjstf8xvjdwa1" path="res://components/flip_sprite_2d.gd" id="10_choun"]
 [ext_resource type="Texture2D" uid="uid://c4uxs2tjw02vw" path="res://assets/art/sprites/highlight1.png" id="11_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://hbxvvbqc4j6b" path="res://assets/art/sprites/drill_bit_bw.png" id="11_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://bnw67gse7dec2" path="res://assets/art/sprites/drill_bit.png" id="12_eb6dy"]
@@ -50,9 +49,6 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_o6xl0"]
 image = SubResource("Image_a8y0u")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipki"]
-size = Vector2(28, 28)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_jbj1t"]
 animations = [{
 "frames": [{
@@ -67,6 +63,69 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipki"]
+size = Vector2(28, 28)
+
+[sub_resource type="Animation" id="Animation_a8y0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_jkv2x"]
+resource_name = "wake_up"
+length = 14.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5.0333333, 7.5, 9.993438, 12.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(1e-05, 1e-05), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpeechBubble")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 5.5, 11, 14),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": ["Booting up…", 2.5],
+"method": &"_on_event_received"
+}, {
+"args": ["Oh hey, you’re alive.", 2.5],
+"method": &"_on_event_received"
+}, {
+"args": ["That makes one of us!", 2.5],
+"method": &"_on_event_received"
+}, {
+"args": ["Move with WASD. If that’s too hard, I can dig you a tutorial grave.", 3.0],
+"method": &"_on_event_received"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jbj1t"]
+_data = {
+&"RESET": SubResource("Animation_a8y0u"),
+&"wake_up": SubResource("Animation_jkv2x")
+}
+
 [node name="Main" type="Node2D" unique_id=658507134]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=608704818]
@@ -79,51 +138,50 @@ tile_map_data = PackedByteArray("AAD+////AQABAAIAAAD+/wAAAQABAAIAAAD+/wEAAQABAAI
 tile_set = SubResource("TileSet_tbgi4")
 script = ExtResource("3_o6xl0")
 
-[node name="Player2" type="Area2D" parent="." unique_id=1533760138]
+[node name="Player2" type="Area2D" parent="." unique_id=1533760138 node_paths=PackedStringArray("drill_particle", "animated_sprite_2d")]
 position = Vector2(336, 144)
 script = ExtResource("2_sugp2")
-metadata/_edit_group_ = true
+drill_particle = NodePath("Sprite2D/DrillParticle")
+animated_sprite_2d = NodePath("Sprite2D/AnimatedSprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player2" unique_id=1728691614]
 position = Vector2(2, 0)
 texture = SubResource("ImageTexture_o6xl0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2" unique_id=1154097795]
-position = Vector2(-0.5, -0.5)
-shape = SubResource("RectangleShape2D_tipki")
+[node name="DrillParticle" parent="Player2/Sprite2D" unique_id=1753906831 instance=ExtResource("6_tefeu")]
+position = Vector2(14, 0)
 
-[node name="RayCast2D" type="RayCast2D" parent="Player2" unique_id=1516647641]
-rotation = -1.5707964
-target_position = Vector2(0, 32)
-
-[node name="PointLight2D" type="PointLight2D" parent="Player2" unique_id=931242820]
-texture = ExtResource("3_sugp2")
-
-[node name="DrillParticle" parent="Player2" unique_id=1753906831 instance=ExtResource("6_tefeu")]
-position = Vector2(16, 0)
-
-[node name="SpeechBubble" parent="Player2" unique_id=324437801 instance=ExtResource("4_jyhfs")]
-offset_left = -2.0
-offset_top = -50.0
-offset_right = 70.0
-offset_bottom = -7.0
-
-[node name="Camera2D" type="Camera2D" parent="Player2" unique_id=1682212070]
-editor_draw_drag_margin = true
-script = ExtResource("9_85g3d")
-
-[node name="FlipSprite2D" type="Node" parent="Player2" unique_id=1472805614 node_paths=PackedStringArray("sprite")]
-script = ExtResource("10_choun")
-sprite = NodePath("../Sprite2D")
-metadata/_custom_type_script = "uid://bjstf8xvjdwa1"
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player2" unique_id=1090205813]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player2/Sprite2D" unique_id=1090205813]
+position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_jbj1t")
 autoplay = "default"
 frame_progress = 0.22669877
 offset = Vector2(32, 0)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2" unique_id=1154097795]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="PointLight2D" type="PointLight2D" parent="Player2" unique_id=931242820]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("3_sugp2")
+
+[node name="Camera2D" type="Camera2D" parent="Player2" unique_id=1682212070]
+editor_draw_drag_margin = true
+script = ExtResource("9_85g3d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player2" unique_id=1420717674]
+libraries/ = SubResource("AnimationLibrary_jbj1t")
+autoplay = &"wake_up"
+
+[node name="SpeechBubble" parent="Player2" unique_id=324437801 instance=ExtResource("4_jyhfs")]
+offset_left = -12.0
+offset_top = -55.0
+offset_right = 11.0
+offset_bottom = -12.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1198259078]
+visible = false
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1217246570]
 offset_left = 1.0
