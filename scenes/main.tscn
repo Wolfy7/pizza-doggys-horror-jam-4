@@ -181,7 +181,6 @@ offset_right = 11.0
 offset_bottom = -12.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1198259078]
-visible = false
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1217246570]
 offset_left = 1.0

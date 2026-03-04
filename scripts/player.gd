@@ -1,6 +1,7 @@
 extends Area2D
 
 var tile_size: int = 32
+var drill_durability: int = 100 # %
 var inputs: Dictionary = {"right": Vector2.RIGHT,
 							"left": Vector2.LEFT,
 							"up": Vector2.UP,
@@ -25,6 +26,7 @@ var facing_tile: Vector2i:
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @export var drill_particle: DrillParticle
 @export var animated_sprite_2d: AnimatedSprite2D
+@onready var texture_progress_bar: TextureProgressBar = $"../CanvasLayer/TextureProgressBar"
 
 
 func set_facing(new_value) -> void:
@@ -45,6 +47,7 @@ func set_facing(new_value) -> void:
 
 func _ready() -> void:
 	set_facing(facing)
+	texture_progress_bar.value = drill_durability
 
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -65,6 +68,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			tile_map_layer.delete_tile(facing_tile)
 			drill_particle.deactivate()
 			facing_tile = facing_tile
+			drill_durability -= 10
+			texture_progress_bar.value = drill_durability
 			drilling = false
 		else:
 			# TODO
