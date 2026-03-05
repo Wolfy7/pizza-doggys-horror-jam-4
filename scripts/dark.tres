@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TileInfo" format=3 uid="uid://v75xo4omfxpn"]
+
+[ext_resource type="Script" uid="uid://c2lu1j5kdn3u1" path="res://scripts/tile_info.gd" id="1_gjrmp"]
+
+[resource]
+script = ExtResource("1_gjrmp")
+tile_type = 3
+metadata/_custom_type_script = "uid://c2lu1j5kdn3u1"

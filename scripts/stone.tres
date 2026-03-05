@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_psw84")
+tile_type = 1
 drillable = true
+drill_bit_erosion = 10
 breakdown_time = 1.5
 metadata/_custom_type_script = "uid://c2lu1j5kdn3u1"

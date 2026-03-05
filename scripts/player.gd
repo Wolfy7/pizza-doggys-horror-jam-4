@@ -1,7 +1,10 @@
 extends Area2D
 
+signal moved
+signal drilled(usage)
+signal drillbit_collected(strength)
+
 var tile_size: int = 32
-var drill_durability: int = 100 # %
 var inputs: Dictionary = {"right": Vector2.RIGHT,
 							"left": Vector2.LEFT,
 							"up": Vector2.UP,
@@ -20,13 +23,14 @@ var facing_tile: Vector2i:
 		else:
 			animated_sprite_2d.hide()
 
+@export var drill_particle: DrillParticle
+@export var animated_sprite_2d: AnimatedSprite2D
+
 @onready var tile_map_layer: TileMapLayer = $"../TileMapLayer"
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var speech_bubble: MarginContainer = $SpeechBubble
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@export var drill_particle: DrillParticle
-@export var animated_sprite_2d: AnimatedSprite2D
-@onready var texture_progress_bar: TextureProgressBar = $"../CanvasLayer/TextureProgressBar"
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 func set_facing(new_value) -> void:
@@ -47,7 +51,6 @@ func set_facing(new_value) -> void:
 
 func _ready() -> void:
 	set_facing(facing)
-	texture_progress_bar.value = drill_durability
 
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -68,12 +71,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			tile_map_layer.delete_tile(facing_tile)
 			drill_particle.deactivate()
 			facing_tile = facing_tile
-			drill_durability -= 10
-			texture_progress_bar.value = drill_durability
+			emit_signal("drilled", tile_info.drill_bit_erosion) 
 			drilling = false
+		elif tile_info && tile_info.tile_type == TileInfo.type.DARKNESS:
+			speech_bubble._on_event_received("Uh… 
+I wouldn’t drill into that darkness.
+Even I don’t know what’s in there.", 3)
 		else:
 			# TODO
-			speech_bubble._on_event_received("Hier kann ich nicht bohren", 5)
+			speech_bubble._on_event_received("Fun fact: 
+you can’t drill something that’s already drilled. 
+But hey, A for effort!", 3)
+			# 
 			
 
 func move(direction: String) -> void:
@@ -84,8 +93,20 @@ func move(direction: String) -> void:
 	tween.tween_property(self, "position", position + inputs[direction] * tile_size, 1.0 / animation_speed). set_trans(Tween.TRANS_SINE)
 	moving = true
 	await tween.finished
+	emit_signal("moved")
 	moving = false
 	
 	current_tile = tile_map_layer.local_to_map(position)
 	facing_tile = tile_map_layer.local_to_map(position + facing * tile_size)
 	
+
+func game_over() -> void:
+	animation_player.play("game_over")
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("drillbit"):
+		emit_signal("drillbit_collected", 15) # TODO
+		area.queue_free()
+	if area.name == "RadioSet":
+		print("Gewonnen")

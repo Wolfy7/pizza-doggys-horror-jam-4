@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://disnk5oaammtp"]
+
+[ext_resource type="Texture2D" uid="uid://d2hmqnnn52qaj" path="res://assets/art/sprites/radio_set.png" id="1_jyrsc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43uf2"]
+size = Vector2(64, 64)
+
+[node name="RadioSet" type="Area2D" unique_id=933094705]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1916259419]
+texture = ExtResource("1_jyrsc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1972720052]
+shape = SubResource("RectangleShape2D_43uf2")

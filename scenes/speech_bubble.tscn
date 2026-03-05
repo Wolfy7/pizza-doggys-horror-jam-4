@@ -53,6 +53,7 @@ theme_override_constants/margin_bottom = 14
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer" unique_id=285982445]
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("2_e1pub")
 theme_override_font_sizes/normal_font_size = 10
@@ -60,3 +61,5 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1

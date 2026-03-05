@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://o5mwoxs6scv5"]
+
+[ext_resource type="Texture2D" uid="uid://byeowq88sj3ms" path="res://assets/art/sprites/drill_bit_blue.png" id="1_b7xtw"]
+[ext_resource type="Script" uid="uid://ctpnr8ythbrlg" path="res://scenes/drill_bit.gd" id="1_o4vsh"]
+
+[sub_resource type="Animation" id="Animation_o4vsh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_u3qln"]
+resource_name = "idlle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0), Vector2(0, 4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_api4o"]
+_data = {
+&"RESET": SubResource("Animation_o4vsh"),
+&"idlle": SubResource("Animation_u3qln")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35qdr"]
+
+[node name="DrillBit" type="Area2D" unique_id=179773373 groups=["drillbit"]]
+modulate = Color(0.34117648, 0.5803922, 0.61960787, 1)
+script = ExtResource("1_o4vsh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=404261538]
+rotation = 3.8397243
+texture = ExtResource("1_b7xtw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=957868477]
+libraries/ = SubResource("AnimationLibrary_api4o")
+autoplay = &"idlle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690158423]
+shape = SubResource("RectangleShape2D_35qdr")
