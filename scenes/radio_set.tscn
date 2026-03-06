@@ -1,14 +1,23 @@
 [gd_scene format=3 uid="uid://disnk5oaammtp"]
 
+[ext_resource type="Script" uid="uid://dy7eon8dbarg5" path="res://scenes/radio_set.gd" id="1_43uf2"]
 [ext_resource type="Texture2D" uid="uid://d2hmqnnn52qaj" path="res://assets/art/sprites/radio_set.png" id="1_jyrsc"]
+[ext_resource type="Texture2D" uid="uid://bvrowmsa80qkx" path="res://assets/art/sprites/2d_lights_and_shadows_neutral_point_light.webp" id="3_rv0tp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43uf2"]
 size = Vector2(64, 64)
 
-[node name="RadioSet" type="Area2D" unique_id=933094705]
+[node name="RadioSet" type="Area2D" unique_id=933094705 groups=["radioset"]]
+script = ExtResource("1_43uf2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1916259419]
 texture = ExtResource("1_jyrsc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1972720052]
 shape = SubResource("RectangleShape2D_43uf2")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=276408505]
+visible = false
+scale = Vector2(0.2, 0.2)
+color = Color(0, 1, 1, 1)
+texture = ExtResource("3_rv0tp")

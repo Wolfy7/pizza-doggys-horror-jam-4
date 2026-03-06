@@ -10,7 +10,7 @@ var move_counter: int = 0
 var drill_counter: int = 0
 var drill_bits_collected: int = 0
 var game_state: GameState = GameState.INTRO
-var drill_durability: int = 90 # in percent
+var drill_durability: int = 70 # in percent
 
 func _ready() -> void:
 	player_2.set_process_unhandled_input(false)
@@ -23,7 +23,7 @@ func _on_player_2_moved() -> void:
 		speech_bubble._on_event_received("Look at you! 
 Moving!
 I’m so proud I could reboot.", 3)
-	print(move_counter)
+	#print(move_counter)
 
 
 func _on_player_2_drilled(usage: Variant) -> void:
@@ -46,7 +46,7 @@ down faster than your optimism.", 3.5)
 		game_over()
 
 	texture_progress_bar.value = drill_durability
-	print(drill_counter, drill_durability)
+	#print(drill_counter, drill_durability)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

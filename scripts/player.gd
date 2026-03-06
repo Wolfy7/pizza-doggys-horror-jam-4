@@ -106,7 +106,17 @@ func game_over() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("drillbit"):
-		emit_signal("drillbit_collected", 15) # TODO
+		emit_signal("drillbit_collected", 40) # TODO
 		area.queue_free()
-	if area.name == "RadioSet":
+	if area.is_in_group("radioset"):
+		victory()
 		print("Gewonnen")
+
+
+func victory() -> void:
+	set_process_unhandled_input(false)
+	speech_bubble._on_event_received("You found it!
+Calling for help…
+or pizza…
+or both!", 3)
+	animation_player.play("victory")

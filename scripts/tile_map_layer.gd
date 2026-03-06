@@ -1,13 +1,13 @@
 extends TileMapLayer
 
 func get_tile_info(tile: Vector2i) -> TileInfo:
-	print("Test")
+	#print("Test")
 	var data = get_cell_tile_data(tile)
-	print(tile, data)
+	#print(tile, data)
 	if data:
 		var tile_info: TileInfo = data.get_custom_data("Test")
 		if tile_info:
-			print(tile_info.drillable)
+			#print(tile_info.drillable)
 			return  tile_info
 	return null
 
